@@ -21,9 +21,13 @@ const postPosts = async (req, res) => {
 };
 
 const deletePosts = async (req, res) => {
-    const deletePost = await prisma.post.delete({ where: { id: req.body.id } });
-    res.json({data: deletePost});
-    
+    try{
+        const deletePost = await prisma.post.delete({ where: { id: parseInt(req.query.id) } });
+        res.json({data: deletePost});
+    }catch{
+        res.status(400).send("Error deleting post");
+    }
+
 };
 
 module.exports = {

@@ -1,9 +1,9 @@
 import React from 'react';
-import PostsTable from './table/postsTable';
+import PostsTable from '../redux/containers/home/postTable';
 export default function Home(props) {
     const {allPosts, error, loading, getPosts,
-        createdPost, loadingCreate, errorCreate, createPost,
-        deletedPost, loadingDelete, errorDelete, deletePost,
+        loadingCreate, errorCreate, createPost,
+        
     } = props;
     React.useEffect(()=>{
       getPosts()
@@ -15,14 +15,7 @@ export default function Home(props) {
         if (allPosts.length > 0){
             setFilteredPosts(allPosts)
         }
-        if(createdPost){
-            alert("Post creado exitosamente")
-            setFilteredPosts([...filteredPosts, createdPost])
-        }if(deletedPost){
-            alert("Post eliminado exitosamente")
-            setFilteredPosts(filteredPosts.filter((post)=> post.id !== deletedPost.id))
-        }
-    }, [allPosts, createdPost, deletedPost])
+    }, [allPosts])
     const [nameFilter, setNameFilter] = React.useState('');
     const [filteredPosts, setFilteredPosts] = React.useState([]);
     const [newPostName, setNewPostName] = React.useState('');

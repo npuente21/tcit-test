@@ -20,10 +20,8 @@ const defaultState = {
     error: null,
     loadingCreate: false,
     errorCreate: null,
-    createdPost: null,
     loadingDelete: false,
     errorDelete: null,
-    deletedPost: null,
 };
 
 //reducer
@@ -72,11 +70,12 @@ function handleLoadingCreatePost(state) {
     }
 }
 function handleSuccessCreatePost(state, {payload: {data}}) {
-    
+    alert("Post creado exitosamente")
     return {
         ...state,
         loadingCreate: false,
-        createPost: data,
+        
+        posts: [...state.posts, data]
     }
 }
 function handleErrorCreatePost(state, {payload: {error}}) {
@@ -93,11 +92,11 @@ function handleLoadingDeletePost(state) {
     }
 }
 function handleSuccessDeletePost(state, {payload: {data}}) {
-    
+    alert(`Post ${data.name} eliminado exitosamente`)
     return {
         ...state,
         loadingDelete: false,
-        deletePost: data,
+        posts: state.posts.filter((post)=> post.id !== data.id)
     }
 }
 function handleErrorDeletePost(state, {payload: {error}}) {
@@ -138,7 +137,7 @@ export function deletePost(postID) {
     return async (dispatch, getState, { services: {postService} }) => {
         dispatch({ type: LOADING_DELETE_POST });
         try {
-            const { data } = await postService.getPosts(postID);
+            const { data } = await postService.deletePosts(postID);
             dispatch({ type: SUCCESS_DELETE_POST, payload: {data} });
         } catch (error) {
             dispatch({ type: ERROR_DELETE_POST, payload: {error} });

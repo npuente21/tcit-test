@@ -22,7 +22,9 @@ export default function PostSourceService({ baseUrl }) {
     async function deletePosts(postId) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      const response = await fetch(`${baseUrl}${POST_PATH}`, {method: 'DELETE', headers: headers, body: JSON.stringify({postId})})
+      let params = new URLSearchParams()
+      params.append('id', postId)
+      const response = await fetch(`${baseUrl}${POST_PATH}?` + params, {method: 'DELETE', headers: headers})
       return await response.json();
     }
   }

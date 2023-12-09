@@ -1,7 +1,10 @@
 import '../../../App.css'
 import React from 'react';
 export default function PostsTable(props){
-    const {tableData} = props;
+    const {allPosts, deletePost} = props;
+    const handleDeleteButton = (e) => {
+      deletePost(e.target.value)
+    }
     return(
         <div className='postsTable'>
           <table>
@@ -14,15 +17,14 @@ export default function PostsTable(props){
           </thead>
           <tbody>
             
-                {tableData.map((item, index) => {
+                {allPosts.map((item, index) => {
                     return(
                         <tr key={index}>
                         <td >{item.name}</td>
                         <td >{item.description}
                         </td>
                         <td >
-                          
-                          <button onClick={()=>{console.log("MUERES")}}>Eliminar</button>
+                          <button type='button' value={item.id} onClick={handleDeleteButton}>Eliminar</button>
                         </td>
                         </tr>
                     )
