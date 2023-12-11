@@ -12,6 +12,7 @@ export const ERROR_CREATE_POST = 'ERROR_POST';
 export const LOADING_DELETE_POST = 'LOADING_CREATE_DELETE_POST';
 export const SUCCESS_DELETE_POST = 'SUCCESS_CREATE_DELETE_POST';
 export const ERROR_DELETE_POST = 'ERROR_DELETE_POST';
+export const SET_FILTER = 'SET_FILTER';
 
 
 const defaultState = {
@@ -22,6 +23,7 @@ const defaultState = {
     errorCreate: null,
     loadingDelete: false,
     errorDelete: null,
+    postNameFilter: '',
 };
 
 //reducer
@@ -35,6 +37,7 @@ export const reducer = createReducer(defaultState, {
     [LOADING_DELETE_POST]: handleLoadingDeletePost,
     [SUCCESS_DELETE_POST]: handleSuccessDeletePost,
     [ERROR_DELETE_POST]: handleErrorDeletePost,
+    [SET_FILTER]: handleSetFilter,
 }) 
 
 
@@ -70,7 +73,7 @@ function handleLoadingCreatePost(state) {
     }
 }
 function handleSuccessCreatePost(state, {payload: {data}}) {
-    alert("Post creado exitosamente")
+    
     return {
         ...state,
         loadingCreate: false,
@@ -107,6 +110,12 @@ function handleErrorDeletePost(state, {payload: {error}}) {
     }
 }
 
+function handleSetFilter(state, {payload: {filter}}) {
+    return {
+        ...state,
+        postNameFilter: filter,
+    }
+}
 
 //actions creator
 export function getPosts() {
@@ -142,5 +151,11 @@ export function deletePost(postID) {
         } catch (error) {
             dispatch({ type: ERROR_DELETE_POST, payload: {error} });
         }
+    };
+}
+
+export function setFilter(filter) {
+    return (dispatch, getState,) => {
+        dispatch({ type: SET_FILTER, payload: {filter} });
     };
 }

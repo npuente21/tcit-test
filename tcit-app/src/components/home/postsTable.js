@@ -1,13 +1,16 @@
-import '../../../App.css'
+import '../../App.css'
 import React from 'react';
+
 export default function PostsTable(props){
-    const {allPosts, deletePost} = props;
+    const {allPosts, deletePost, postNameFilter, loading} = props;
     const handleDeleteButton = (e) => {
       deletePost(e.target.value)
     }
     return(
+        <div>
+        { loading ? <div>Cargando...</div>:
         <div className='postsTable'>
-          <table>
+        <table>
           <thead>
             <tr>
               <th>Nombre</th>
@@ -17,7 +20,7 @@ export default function PostsTable(props){
           </thead>
           <tbody>
             
-                {allPosts.map((item, index) => {
+                {allPosts && allPosts.filter((post)=> post.name.includes(postNameFilter)).map((item, index) => {
                     return(
                         <tr key={index}>
                         <td >{item.name}</td>
@@ -32,6 +35,8 @@ export default function PostsTable(props){
            
           </tbody>
         </table>
+        </div>}
+          
       </div>
     )
 }
